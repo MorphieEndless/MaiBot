@@ -15,7 +15,7 @@ import time
 import traceback
 
 from src.common.i18n import set_locale, t, tn
-from src.common.logger import get_logger, initialize_logging, shutdown_logging
+from src.common.logger import get_logger, shutdown_logging
 from src.common.runtime_loop import set_main_loop
 from src.common.shutdown import request_shutdown
 from src.common.update_notice import emit_terminal_update_notice_if_needed
@@ -29,7 +29,7 @@ set_locale(os.getenv("MAIBOT_LOCALE", "zh-CN"))
 # 检查是否是 Worker 进程，只在 Worker 进程中输出详细的初始化信息
 # Runner 进程只需要基本的日志功能，不需要详细的初始化日志
 is_worker = os.environ.get("MAIBOT_WORKER_PROCESS") == "1"
-initialize_logging(verbose=is_worker)
+# initialize_logging(verbose=is_worker)
 install(extra_lines=3)
 logger = get_logger("main")
 
@@ -471,10 +471,10 @@ if __name__ == "__main__":
         _active_main_loop = loop
         signal.signal(signal.SIGINT, _mark_shutdown_and_interrupt)
 
-        # 初始化 WebSocket 日志推送
-        from src.common.logger import initialize_ws_handler
+        # # 初始化 WebSocket 日志推送
+        # from src.common.logger import initialize_ws_handler
 
-        initialize_ws_handler(loop)
+        # initialize_ws_handler(loop)
 
         try:
             # 执行初始化和任务调度
